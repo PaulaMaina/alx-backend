@@ -50,6 +50,6 @@ class Server:
                 'page': page,
                 'data': data,
                 'next_page': page + 1 if end < len(self.__dataset) else None,
-                'prev_page': page - 1 if start > 0 else None
+                'prev_page': page - 1 if start > 0 else None,
                 'total_pages': pages
         }
