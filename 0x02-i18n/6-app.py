@@ -40,7 +40,7 @@ def before_request() -> None:
     g.user = get_user()
 
 
-@babel.localselector
+@babel.localeselector
 def get_locale() -> str:
     """get_locale function"""
     locale = request.args.get('locale')
@@ -48,7 +48,7 @@ def get_locale() -> str:
         return locale
     if g.user and g.user['locale'] in app.config['LANGUAGES']:
         return g.user['locale']
-    headr_locale = request.header.get('locale', '')
+    header_locale = request.header.get('locale', '')
     if header_locale in app.config['LANGUAGES']:
         return header_locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
