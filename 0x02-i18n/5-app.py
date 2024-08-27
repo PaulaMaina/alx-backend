@@ -40,7 +40,7 @@ def before_request() -> None:
     g.user = get_user()
 
 
-@babel.localselector
+@babel.localeselector
 def get_locale() -> str:
     """get_locale function"""
     locale = request.args.get('locale')
