@@ -37,21 +37,22 @@ def get_user() -> Union[Dict, None]:
 @app.before_request
 def before_request() -> None:
     """Routine to get user"""
-    g.user = get_user()
+    user = get_user()
+    g.user = user
 
 
 @babel.localeselector
 def get_locale() -> str:
     """get_locale function"""
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
+    locale = request.args.get('locale', '')
+    if locale in app.config["LANGUAGES"]:
         return locale
-    if g.user and g.user['locale'] in app.config['LANGUAGES']:
+    if g.user and g.user['locale'] in app.config["LANGUAGES"]:
         return g.user['locale']
     header_locale = request.headers.get('locale', '')
-    if header_locale in app.config['LANGUAGES']:
+    if header_locale in app.config["LANGUAGES"]:
         return header_locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route('/')
@@ -61,4 +62,4 @@ def index() -> str:
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port=5000)
