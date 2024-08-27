@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Parameterize templates"""
-from flask import Flask, g, render_template, request
+from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from typing import Dict, Union
 
@@ -37,16 +37,17 @@ def get_user() -> Union[Dict, None]:
 @app.before_request
 def before_request() -> None:
     """Routine to get user"""
-    g.user = get_user()
+    user = get_user()
+    g.user = user
 
 
 @babel.localeselector
 def get_locale() -> str:
     """get_locale function"""
     locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
+    if locale in app.config["LANGUAGES"]:
         return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route('/')
@@ -56,4 +57,4 @@ def index() -> str:
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
